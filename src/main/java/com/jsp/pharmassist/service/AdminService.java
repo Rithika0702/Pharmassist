@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.jsp.pharmassist.controller.AdminController;
 import com.jsp.pharmassist.entity.Admin;
+import com.jsp.pharmassist.exception.AdminNotFoundByIdException;
 import com.jsp.pharmassist.mapper.AdminMapper;
 import com.jsp.pharmassist.repository.AdminRepository;
 import com.jsp.pharmassist.requestdtos.AdminRequest;
@@ -35,6 +36,13 @@ public class AdminService {
                                .stream()
                                .map(adminMapper::mapToAdminResponse)
                                .toList();		
+	}
+
+	public AdminResponse findAdmin(String adminId) {
+
+      return  adminRepository.findById(adminId)
+                             .map(adminMapper::mapToAdminResponse)
+                             .orElseThrow(() -> new AdminNotFoundByIdException("Failed to find admin"));
 	}
 	
 
