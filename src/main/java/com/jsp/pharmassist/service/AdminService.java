@@ -1,4 +1,6 @@
 package com.jsp.pharmassist.service;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.jsp.pharmassist.controller.AdminController;
@@ -26,6 +28,13 @@ public class AdminService {
 		
 		Admin admin = adminRepository.save(adminMapper.mapToAdmin(adminRequest,new Admin()));
 		return adminMapper.mapToAdminResponse(admin);
+	}
+
+	public List<AdminResponse> findAllAdmins() {
+	     return	adminRepository.findAll()
+                               .stream()
+                               .map(adminMapper::mapToAdminResponse)
+                               .toList();		
 	}
 	
 
