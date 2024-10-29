@@ -1,7 +1,11 @@
 package com.jsp.pharmassist.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +35,13 @@ public class AdminController {
 	
 		AdminResponse response =  adminService.saveAdmin(adminRequest);
 		return responseBuilder.success(HttpStatus.CREATED, "Admin Created",response);
+	}
+	
+	@GetMapping("/admins")
+	public ResponseEntity<ResponseStructure<List<AdminResponse>>> findAllAdmins() {
+		
+		List<AdminResponse> responses = adminService.findAllAdmins();
+		return responseBuilder.success(HttpStatus.FOUND,"Admins Found", responses);
 	}
 	
 
