@@ -44,16 +44,6 @@ public class AdminService {
                              .orElseThrow(() -> new AdminNotFoundByIdException("Failed to find admin"));
 	}
 
-	public AdminResponse deleteAdmin(String adminId) {
-		
-		return adminRepository.findById(adminId)
-                .map(admin -> {	    
-                   adminRepository.delete(admin);
-                   return admin;
-                })
-                .map(adminMapper::mapToAdminResponse)
-                .orElseThrow(() -> new AdminNotFoundByIdException("Failed to delete admin"));
-	}
 
 	public AdminResponse updateAdmin(AdminRequest adminRequest, String adminId) {
 		

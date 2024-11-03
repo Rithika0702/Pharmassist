@@ -53,13 +53,6 @@ public class AdminController {
 		return responseBuilder.success(HttpStatus.FOUND,"Admin Found", response);
 	}
 	
-	@DeleteMapping("/admins/{adminId}")
-	public ResponseEntity<ResponseStructure<AdminResponse>> deleteAdmin(@PathVariable String adminId) {
-		
-		AdminResponse response = adminService.deleteAdmin(adminId);
-		return responseBuilder.success(HttpStatus.OK,"Admin deleted", response);
-	}
-	
 	@PutMapping("/admins/{adminId}")
 	public ResponseEntity<ResponseStructure<AdminResponse>> updateAdmin(@RequestBody AdminRequest adminRequest,@PathVariable String adminId) {
 		
