@@ -6,6 +6,7 @@ import com.jsp.pharmassist.entity.Admin;
 import com.jsp.pharmassist.entity.Pharmacy;
 import com.jsp.pharmassist.exception.AdminNotFoundByIdException;
 import com.jsp.pharmassist.exception.NoPharmacyFoundException;
+import com.jsp.pharmassist.exception.PharmacyNotFoundByIdException;
 import com.jsp.pharmassist.mapper.PharmacyMapper;
 import com.jsp.pharmassist.repository.AdminRepository;
 import com.jsp.pharmassist.repository.PharmacyRepository;
@@ -56,6 +57,17 @@ public class PharmacyService {
 //						.map(pharmacyMapper::mapToPharmacyResponse)  // Map Pharmacy to PharmacyResponse
 //						.orElseThrow(() -> new PharmacyNotFoundException("No Pharmacy associated with admin ID:"+adminId));
 
+	}
+
+	public PharmacyResponse updatePharmacy(PharmacyRequest pharmacyRequest, String pharmacyId) {
+		
+		return pharmacyRepository.findById(pharmacyId)
+				                 .map(exPharmacy ->{
+					                    pharmacyMapper.mapToPharmacy(pharmacyRequest, exPharmacy);
+					                    return pharmacyRepository.save(exPharmacy);
+				                 })
+				                 .map(pharmacyMapper::mapToPharmacyResponse)
+				                 .orElseThrow(() -> new PharmacyNotFoundByIdException("Failed to update Pharmacy"));
 	}
 
 	

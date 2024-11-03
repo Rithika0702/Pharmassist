@@ -10,8 +10,6 @@ import com.jsp.pharmassist.repository.AdminRepository;
 import com.jsp.pharmassist.requestdtos.AdminRequest;
 import com.jsp.pharmassist.responsedtos.AdminResponse;
 
-import jakarta.validation.Valid;
-
 @Service
 public class AdminService {
 	
