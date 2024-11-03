@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +50,13 @@ public class AdminController {
 		
 		AdminResponse response = adminService.findAdmin(adminId);
 		return responseBuilder.success(HttpStatus.FOUND,"Admin Found", response);
+	}
+	
+	@DeleteMapping("/admins/{adminId}")
+	public ResponseEntity<ResponseStructure<AdminResponse>> deleteAdmin(@PathVariable String adminId) {
+		
+		AdminResponse response = adminService.deleteAdmin(adminId);
+		return responseBuilder.success(HttpStatus.OK,"Admin deleted", response);
 	}
 	
 

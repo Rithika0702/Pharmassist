@@ -3,7 +3,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.jsp.pharmassist.controller.AdminController;
 import com.jsp.pharmassist.entity.Admin;
 import com.jsp.pharmassist.exception.AdminNotFoundByIdException;
 import com.jsp.pharmassist.mapper.AdminMapper;
@@ -43,6 +42,17 @@ public class AdminService {
       return  adminRepository.findById(adminId)
                              .map(adminMapper::mapToAdminResponse)
                              .orElseThrow(() -> new AdminNotFoundByIdException("Failed to find admin"));
+	}
+
+	public AdminResponse deleteAdmin(String adminId) {
+		
+		return adminRepository.findById(adminId)
+                .map(admin -> {	    
+                   adminRepository.delete(admin);
+                   return admin;
+                })
+                .map(adminMapper::mapToAdminResponse)
+                .orElseThrow(() -> new AdminNotFoundByIdException("Failed to delete admin"));
 	}
 	
 
