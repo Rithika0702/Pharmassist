@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jsp.pharmassist.requestdtos.AdminRequest;
 import com.jsp.pharmassist.requestdtos.PharmacyRequest;
-import com.jsp.pharmassist.responsedtos.AdminResponse;
 import com.jsp.pharmassist.responsedtos.PharmacyResponse;
 import com.jsp.pharmassist.service.PharmacyService;
 import com.jsp.pharmassist.utility.AppResponseBuilder;

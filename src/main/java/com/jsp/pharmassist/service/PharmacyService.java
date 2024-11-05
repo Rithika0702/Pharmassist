@@ -55,7 +55,7 @@ public class PharmacyService {
 //		return adminRepository.findById(adminId)
 //						.map(Admin::getPharmacy)  // Extract the pharmacy from the admin
 //						.map(pharmacyMapper::mapToPharmacyResponse)  // Map Pharmacy to PharmacyResponse
-//						.orElseThrow(() -> new PharmacyNotFoundException("No Pharmacy associated with admin ID:"+adminId));
+//						.orElseThrow(() -> new NoPharmarcyFoundException("No Pharmacy associated with admin ID:"+adminId));
 
 	}
 
