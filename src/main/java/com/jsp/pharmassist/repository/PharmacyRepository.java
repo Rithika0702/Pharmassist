@@ -6,4 +6,5 @@ import com.jsp.pharmassist.entity.Pharmacy;
 
 public interface PharmacyRepository extends JpaRepository<Pharmacy, String>{
 
+
 }
