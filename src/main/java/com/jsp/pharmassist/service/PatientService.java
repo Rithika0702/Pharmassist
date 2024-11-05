@@ -3,6 +3,7 @@ package com.jsp.pharmassist.service;
 import org.springframework.stereotype.Service;
 
 import com.jsp.pharmassist.entity.Patient;
+import com.jsp.pharmassist.exception.PatientNotFoundByIdException;
 import com.jsp.pharmassist.exception.PharmacyNotFoundByIdException;
 import com.jsp.pharmassist.mapper.PatientMapper;
 import com.jsp.pharmassist.repository.PatientRepository;
@@ -37,6 +38,19 @@ public class PatientService {
 				})
 				.orElseThrow(() ->new PharmacyNotFoundByIdException("Failed to find Pharmacy"));
                         
+	}
+
+	public PatientResponse updatePatient(PatientRequest patientRequest, String patientId) {
+		
+	return 	patientRepository.findById(patientId)
+		                    .map(exPatient -> {
+		                      	patientMapper.mapToPatient(patientRequest, exPatient);
+			                   return patientRepository.save(exPatient);
+		                    })
+		                    .map(patientMapper::mapToPatientResponse)
+		              .orElseThrow(() -> new PatientNotFoundByIdException("Failed to update Patient"));
+		
+		
 	}
 
 }
