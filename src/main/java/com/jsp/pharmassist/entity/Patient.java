@@ -6,6 +6,8 @@ import com.jsp.pharmassist.config.GenerateCustomId;
 import com.jsp.pharmassist.enums.Gender;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
@@ -18,7 +20,10 @@ public class Patient {
 	private String patientName;
 	private String patientEmail;
 	private String patientPhoneNumber;
+	
+	@Enumerated(EnumType.STRING)
 	private Gender patientGender;
+	
 	private LocalDate patientDateOfBirth;
 	
 	@ManyToOne

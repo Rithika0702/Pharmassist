@@ -19,6 +19,18 @@ public class AppResponseBuilder {
 				.status(status)
 				.body(ErrorStructure.create(status.value(), message, rootCause));
 	}
+    
+    public ResponseEntity<SimpleResponseStructure> success(HttpStatus status, String message) {
+    	
+    	return ResponseEntity.status(status)
+    			.body(SimpleResponseStructure.create(status,message));
+    }
+    
+    public ResponseEntity<SimpleResponseStructure> error(HttpStatus status, String message) {
+    	
+    	return ResponseEntity.status(status)
+    			.body(SimpleResponseStructure.create(status,message));
+    }
 	
   
 }
