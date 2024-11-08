@@ -47,7 +47,7 @@ public class PatientController {
 	
 	@GetMapping("/pharmacies/{pharmacyId}/patients")
 	public ResponseEntity<ResponseStructure<List<PatientResponse>>> findAllPatientsByPharmacyId(@PathVariable String pharmacyId) {
-	    List<PatientResponse> response = patientService.findAllPatientByPharmacyId(pharmacyId);
+	    List<PatientResponse> response = patientService.findAllPatientsByPharmacyId(pharmacyId);
 	    return responseBuilder.success(HttpStatus.FOUND, "Patients associated with the pharmacyId found", response);
 	}
 }
