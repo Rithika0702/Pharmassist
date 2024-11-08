@@ -36,8 +36,8 @@ public class MedicineController {
 		return responseBuilder.success(HttpStatus.CREATED, message);	
 	}
 	
-	@GetMapping("medicines/{name}/{ingredient}")
-	public ResponseEntity<ResponseStructure<List<MedicineResponse>>> findMedicineByNameOrIngredient(@PathVariable String name, @PathVariable String ingredient) {
+	@GetMapping("medicines")
+	public ResponseEntity<ResponseStructure<List<MedicineResponse>>> findMedicineByNameOrIngredient(@RequestParam String name, @RequestParam String ingredient) {
 	
 	List<MedicineResponse> medicines = medicineService.findMedicineByNameOrIngredient(name, ingredient);
 	return responseBuilder.success(HttpStatus.FOUND,"Medicines Found", medicines);
