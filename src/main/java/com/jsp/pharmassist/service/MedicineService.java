@@ -21,9 +21,12 @@ import com.jsp.pharmassist.enums.Form;
 import com.jsp.pharmassist.exception.InvalidDataException;
 import com.jsp.pharmassist.exception.InvalidDateFormatException;
 import com.jsp.pharmassist.exception.InvalidFileFormatException;
+import com.jsp.pharmassist.exception.NoMedicinesFoundException;
 import com.jsp.pharmassist.exception.PharmacyNotFoundByIdException;
+import com.jsp.pharmassist.mapper.MedicineMapper;
 import com.jsp.pharmassist.repository.MedicineRepository;
 import com.jsp.pharmassist.repository.PharmacyRepository;
+import com.jsp.pharmassist.responsedtos.MedicineResponse;
 
 import jakarta.validation.Valid;
 
@@ -32,14 +35,18 @@ public class MedicineService {
 	
 	private final PharmacyRepository pharmacyRepository;
 	private final MedicineRepository medicineRepository;
+	private final MedicineMapper medicineMapper;
 
-	public MedicineService(PharmacyRepository pharmacyRepository, MedicineRepository medicineRepository) {
+   public MedicineService(PharmacyRepository pharmacyRepository, MedicineRepository medicineRepository,
+			MedicineMapper medicineMapper) {
 		super();
 		this.pharmacyRepository = pharmacyRepository;
 		this.medicineRepository = medicineRepository;
+		this.medicineMapper = medicineMapper;
 	}
 
-   //@Transactional
+
+//@Transactional
 	public String uploadMedicines(MultipartFile file,String pharmacyId) {
 		
 		Pharmacy pharmacy = pharmacyRepository.findById(pharmacyId)
@@ -105,5 +112,16 @@ public class MedicineService {
 	}
 
 
+	public List<MedicineResponse> findMedicineByNameOrIngredient(String name, String ingredient) {
+		
+		List<Medicine> medicines =  medicineRepository.findByNameLikeIgnoreCaseOrIngredientsLikeIgnoreCase(name, ingredient);
+				                                     
+        if(medicines.isEmpty())	
+        	throw new NoMedicinesFoundException("Failed to find medicines based on name or ingredients");
+        else	
+		     return  medicines.stream()
+		                      .map(medicineMapper :: mapToMedicineResponse)
+		                      .toList();
+	}
 
 }

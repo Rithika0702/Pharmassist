@@ -1,6 +1,7 @@
 package com.jsp.pharmassist.service;
 
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 import com.jsp.pharmassist.entity.Patient;
 import com.jsp.pharmassist.exception.NoPatientsFoundException;
@@ -54,15 +55,15 @@ public class PatientService {
 		
 	}
 
-	public List<PatientResponse> findAllPatientByPharmacyId(String pharmacyId) {
-			
-		 return pharmacyRepository.findById(pharmacyId)
-			        .map(pharmacy -> patientRepository.findByPharmacy(pharmacy))
-			        .filter(patients -> !patients.isEmpty())
-			        .orElseThrow(() -> new NoPatientsFoundException("Failed to find patients associated with the pharmacyID: " + pharmacyId))
-			        .stream()
-			        .map(patientMapper::mapToPatientResponse)
-			        .toList();
+	public List<PatientResponse> findAllPatientsByPharmacyId(String pharmacyId) {
+		 
+		return pharmacyRepository.findById(pharmacyId)
+		        .map(pharmacy -> patientRepository.findByPharmacy(pharmacy))
+		        .filter(patients -> !patients.isEmpty())
+		        .orElseThrow(() -> new NoPatientsFoundException("Failed to find patients associated with the pharmacyID: " + pharmacyId))
+		        .stream()
+		        .map(patientMapper::mapToPatientResponse)
+		        .toList();
 			        
        
 		}
