@@ -2,9 +2,11 @@ package com.jsp.pharmassist.exceptionhandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.jsp.pharmassist.exception.AdminNotAuthenticatedException;
 import com.jsp.pharmassist.exception.AdminNotFoundByIdException;
 import com.jsp.pharmassist.exception.NoAdminsFoundException;
 import com.jsp.pharmassist.utility.AppResponseBuilder;
@@ -30,6 +32,17 @@ public class AdminExceptionHandler {
 	public ResponseEntity<ErrorStructure> handleAdminNotFoundById(AdminNotFoundByIdException ex) {
 		
 		return responseBuilder.error(HttpStatus.NOT_FOUND,ex.getMessage(),"Admin is not found by Id");
+	}
+	
+	@ExceptionHandler(UsernameNotFoundException.class)
+	public ResponseEntity<ErrorStructure> handleUsernameNotFound(UsernameNotFoundException ex) {
+		return responseBuilder.error(HttpStatus.NOT_FOUND,ex.getMessage(),"Admin is not found by username");
+		
+	}
+	
+	@ExceptionHandler(AdminNotAuthenticatedException.class)
+	public ResponseEntity<ErrorStructure> handleAdminNotAuthenticated(AdminNotAuthenticatedException ex) {
+		return responseBuilder.error(HttpStatus.BAD_REQUEST,ex.getMessage(),"Registration should be done before login");
 	}
 
 
