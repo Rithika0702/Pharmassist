@@ -35,7 +35,7 @@ public class Medicine {
 	
 	@NotNull(message ="Ingredients cannot be null")
 	@NotBlank(message ="Ingredients cannot be blank")
-	@Pattern(regexp ="^[A-Za-z0-9,-]{1,200}$",message = "Invalid ingredients")
+	@Pattern(regexp ="^[A-Za-z0-9\\s\\-]{1,200}$",message = "Invalid ingredients")
 	private String ingredients;
 	
 	@Min(value = 1)

@@ -29,10 +29,10 @@ public class PharmacyController {
 		this.responseBuilder = responseBuilder;
 	}
 	
-	@PostMapping("/admins/{adminId}/pharmacies")
-	public ResponseEntity<ResponseStructure<PharmacyResponse>> addPharmacy(@RequestBody @Valid PharmacyRequest pharmacyRequest, @PathVariable String adminId) {
+	@PostMapping("/pharmacies")
+	public ResponseEntity<ResponseStructure<PharmacyResponse>> addPharmacy(@RequestBody @Valid PharmacyRequest pharmacyRequest) {
 	
-		PharmacyResponse response = pharmacyService.addPharmacy(pharmacyRequest,adminId);
+		PharmacyResponse response = pharmacyService.addPharmacy(pharmacyRequest);
 		return responseBuilder.success(HttpStatus.CREATED, "Pharmacy Created", response);
 	}
 	

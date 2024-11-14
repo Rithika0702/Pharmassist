@@ -12,6 +12,7 @@ import com.jsp.pharmassist.repository.AdminRepository;
 import com.jsp.pharmassist.repository.PharmacyRepository;
 import com.jsp.pharmassist.requestdtos.PharmacyRequest;
 import com.jsp.pharmassist.responsedtos.PharmacyResponse;
+import com.jsp.pharmassist.security.AuthUtils;
 
 @Service
 public class PharmacyService {
@@ -19,25 +20,28 @@ public class PharmacyService {
 	private final PharmacyRepository pharmacyRepository;
 	private final PharmacyMapper pharmacyMapper;
 	private final AdminRepository adminRepository;
+	private final AuthUtils authUtils;
 	
-	public PharmacyService(PharmacyRepository pharmacyRepository, PharmacyMapper pharmacyMapper,AdminRepository adminRepository) {
+    public PharmacyService(PharmacyRepository pharmacyRepository, PharmacyMapper pharmacyMapper,
+			AdminRepository adminRepository, AuthUtils authUtils) {
 		super();
 		this.pharmacyRepository = pharmacyRepository;
 		this.pharmacyMapper = pharmacyMapper;
 		this.adminRepository = adminRepository;
+		this.authUtils = authUtils;
 	}
-	
-    public PharmacyResponse addPharmacy(PharmacyRequest pharmacyRequest,String adminId) {
-	
-    return adminRepository.findById(adminId)
-    		              .map( admin -> {
+
+	public PharmacyResponse addPharmacy(PharmacyRequest pharmacyRequest) {
+	 Admin admin = authUtils.getCurrentAdmin();
+   // return adminRepository.findById(adminId)
+    		            //  .map( admin -> {
     					      Pharmacy pharmacy = pharmacyRepository
     					    		  .save(pharmacyMapper.mapToPharmacy(pharmacyRequest, new Pharmacy()));
     					      admin.setPharmacy(pharmacy);
     					      adminRepository.save(admin);
     					      return pharmacyMapper.mapToPharmacyResponse(pharmacy);				
-    				      })
-    				     .orElseThrow(() ->new AdminNotFoundByIdException("Failed to find Admin"));
+    				     // })
+    				     //.orElseThrow(() ->new AdminNotFoundByIdException("Failed to find Admin"));
 	}
 
 	public PharmacyResponse findPharmacyByAdminId(String adminId) {
